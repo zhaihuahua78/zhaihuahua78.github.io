@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>许艾 · 古筝演奏</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #faf7f2;
+            color: #2d2a27;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .serif { font-family: 'Noto Serif SC', serif; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f0ebe4; }
+        ::-webkit-scrollbar-thumb { background: #b8a99a; border-radius: 3px; }
+
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(250, 247, 242, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding: 0 2.5rem; height: 60px;
+            display: flex; align-items: center;
+            transition: box-shadow 0.3s;
+        }
+        .nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+        .nav-inner { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em; }
+        .nav-logo span { color: #b8860b; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: #5a534b; font-size: 0.85rem;
+            font-weight: 400; letter-spacing: 0.06em;
+            transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; left: 0; bottom: -2px;
+            width: 0; height: 1.5px; background: #b8860b;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: #b8860b; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-toggle { display: none; background: none; border: none; font-size: 1.3rem; color: #2d2a27; cursor: pointer; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            background: linear-gradient(165deg, #faf7f2 0%, #efe9e0 50%, #e5d9cc 100%);
+            padding: 80px 2.5rem 60px; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -30%; right: -15%;
+            width: 70vmin; height: 70vmin; border-radius: 50%;
+            background: radial-gradient(circle, rgba(184,134,11,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -20%; left: -10%;
+            width: 60vmin; height: 60vmin; border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,85,55,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; text-align: center; max-width: 800px; }
+        .hero-subtitle { font-size: 0.85rem; letter-spacing: 0.4em; color: #8a7a6a; text-transform: uppercase; margin-bottom: 1.2rem; }
+        .hero-name { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 900; letter-spacing: 0.08em; color: #1a1512; line-height: 1.1; }
+        .hero-name span { color: #b8860b; position: relative; }
+        .hero-name span::after {
+            content: ''; position: absolute; left: 0; bottom: 0.08em;
+            width: 100%; height: 0.06em;
+            background: linear-gradient(90deg, transparent, #b8860b, transparent);
+        }
+        .hero-role { font-size: clamp(1rem, 2vw, 1.3rem); color: #6b5d50; margin-top: 0.8rem; letter-spacing: 0.3em; font-weight: 300; }
+        .hero-divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #b8860b, transparent); margin: 1.8rem auto; }
+        .hero-tagline { font-family: 'Noto Serif SC', serif; font-size: 0.95rem; color: #7a6d5e; line-height: 1.9; max-width: 540px; margin: 0 auto; }
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-top: 2.5rem; }
+        .hero-stat { text-align: center; }
+        .hero-stat-num { font-family: 'Noto Serif SC', serif; font-size: 1.8rem; font-weight: 700; color: #b8860b; }
+        .hero-stat-label { font-size: 0.75rem; color: #8a7a6a; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+        section { padding: 5rem 2.5rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .section-label { font-size: 0.75rem; letter-spacing: 0.3em; color: #b8860b; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; color: #1a1512; margin-bottom: 1rem; letter-spacing: 0.04em; }
+        .section-desc { color: #6b5d50; font-size: 0.95rem; max-width: 600px; }
+        .section-divider { width: 40px; height: 2px; background: linear-gradient(90deg, #b8860b, transparent); margin: 1.5rem 0 2.5rem; }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        .about-info {
+            display: flex; flex-wrap: wrap; gap: 1.2rem;
+            background: #fff; border-radius: 12px; padding: 2rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+        .about-info-item { flex: 1 1 120px; }
+        .about-info-label { font-size: 0.7rem; color: #8a7a6a; letter-spacing: 0.08em; }
+        .about-info-value { font-weight: 500; color: #1a1512; margin-top: 0.2rem; }
+        .about-text p { font-size: 0.95rem; color: #4a423b; margin-bottom: 1.2rem; line-height: 2; }
+        .about-text p:last-child { margin-bottom: 0; }
+        .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+        .about-tag {
+            background: #fff; border: 1px solid #e5ddd4; border-radius: 20px;
+            padding: 0.3rem 1rem; font-size: 0.78rem; color: #5a534b; transition: all 0.3s;
+        }
+        .about-tag:hover { border-color: #b8860b; color: #b8860b; }
+
+        .gallery-personal { margin-top: 3rem; }
+        .gallery-personal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.8rem; }
+        .gallery-personal-grid .gallery-item:first-child { grid-column: span 2; grid-row: span 2; }
+        .gallery-item { border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; aspect-ratio: 1; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+        .gallery-item:hover img { transform: scale(1.06); }
+
+        .categories { background: #fff; }
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+        .cat-card {
+            background: #faf7f2; border-radius: 10px; padding: 1.5rem 1rem;
+            text-align: center; transition: all 0.35s ease; cursor: default;
+            border: 1px solid transparent; text-decoration: none; display: block; color: inherit;
+        }
+        .cat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(184,134,11,0.2);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+        }
+        .cat-card i { font-size: 1.6rem; color: #b8860b; margin-bottom: 0.6rem; display: block; }
+        .cat-card h3 { font-size: 0.9rem; font-weight: 600; color: #1a1512; }
+        .cat-card p { font-size: 0.75rem; color: #7a6d5e; margin-top: 0.3rem; }
+
+        .media-section { background: #fff; padding-top: 0; }
+        .media-category { margin-bottom: 3rem; }
+        .media-category:last-child { margin-bottom: 0; }
+        .media-category-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+        .media-category-header i { color: #b8860b; font-size: 1.1rem; }
+        .media-category-header h3 { font-size: 1.05rem; font-weight: 600; color: #1a1512; }
+        .media-category-header .count {
+            font-size: 0.72rem; color: #8a7a6a;
+            background: #f0ebe4; border-radius: 10px; padding: 0.1rem 0.6rem;
+        }
+        .media-grid { display: grid; gap: 0.8rem; }
+        .media-grid.images { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        .media-grid.videos { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        .media-item { border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; background: #f0ebe4; }
+        .media-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+        .media-item:hover img { transform: scale(1.05); }
+        .media-item.image-item { aspect-ratio: 4/3; }
+        .media-item.video-item video { width: 100%; display: block; max-height: 320px; background: #1a1512; border-radius: 10px; }
+        .media-item .video-badge {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(0,0,0,0.6); color: #fff;
+            font-size: 0.7rem; padding: 0.15rem 0.5rem;
+            border-radius: 6px; pointer-events: none;
+        }
+
+        .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .exp-card {
+            background: #fff; border-radius: 12px; padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border-left: 3px solid #e5ddd4; transition: all 0.35s ease;
+        }
+        .exp-card:hover { border-left-color: #b8860b; box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+        .exp-card-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; border-radius: 8px;
+            background: #f5f0ea; color: #b8860b; margin-bottom: 0.8rem; font-size: 1rem;
+        }
+        .exp-card h3 { font-size: 0.95rem; font-weight: 600; color: #1a1512; margin-bottom: 0.6rem; }
+        .exp-card ul { list-style: none; padding: 0; }
+        .exp-card ul li { font-size: 0.83rem; color: #5a534b; line-height: 1.7; padding-left: 1em; position: relative; margin-bottom: 0.3rem; }
+        .exp-card ul li::before { content: '·'; position: absolute; left: 0; color: #b8860b; font-weight: 700; }
+
+        .costume { background: linear-gradient(165deg, #faf7f2, #f0ebe4); text-align: center; }
+        .costume-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem; }
+        .costume-item {
+            background: #fff; border-radius: 10px; padding: 0.7rem 1.6rem;
+            font-size: 0.9rem; font-weight: 500; color: #3d3630;
+            border: 1px solid #e5ddd4; transition: all 0.3s;
+        }
+        .costume-item:hover { border-color: #b8860b; color: #b8860b; transform: translateY(-2px); }
+        .costume-img-wrap {
+            margin-top: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;
+            border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .costume-img-wrap img { width: 100%; display: block; }
+
+        .lightbox {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999;
+            background: rgba(0,0,0,0.85);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            padding: 2rem;
+        }
+        .lightbox.open { opacity: 1; pointer-events: auto; }
+        .lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.3); object-fit: contain; }
+        .lightbox-close {
+            position: absolute; top: 1.2rem; right: 1.5rem;
+            color: #fff; font-size: 2rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s;
+            background: none; border: none;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        .footer { text-align: center; padding: 3rem 2.5rem 2rem; color: #8a7a6a; font-size: 0.8rem; border-top: 1px solid rgba(0,0,0,0.05); }
+
+        .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .nav { padding: 0 1.2rem; }
+            .nav-links {
+                position: fixed; top: 60px; left: 0; right: 0;
+                background: rgba(250,247,242,0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column; padding: 1.5rem 2rem; gap: 1.2rem;
+                transform: translateY(-120%); opacity: 0;
+                transition: all 0.35s ease; pointer-events: none;
+                border-bottom: 1px solid rgba(0,0,0,0.06);
+            }
+            .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+            .nav-toggle { display: block; }
+            .hero { padding: 80px 1.2rem 40px; }
+            .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+            section { padding: 3rem 1.2rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .exp-grid { grid-template-columns: 1fr; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-personal-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-personal-grid .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+            .media-grid.images { grid-template-columns: repeat(2, 1fr); }
+            .media-grid.videos { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-stats { gap: 1rem; }
+            .hero-stat-num { font-size: 1.4rem; }
+            .gallery-personal-grid { grid-template-columns: 1fr 1fr; }
+            .media-grid.images { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav" id="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">许艾 <span>·</span> 古筝</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">简介</a></li>
+                <li><a href="#gallery">演出集锦</a></li>
+                <li><a href="#experience">演出经历</a></li>
+                <li><a href="#costume">服装选择</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">— Guzheng Artist —</div>
+            <h1 class="hero-name">许<span>艾</span></h1>
+            <p class="hero-role">古 筝 演 奏</p>
+            <div class="hero-divider"></div>
+            <p class="hero-tagline">四岁习筝，毕业于音乐学专业<br>师从上海音乐学院孙文妍教授、陈慧老师</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="hero-stat-num">165</div><div class="hero-stat-label">身高 cm</div></div>
+                <div class="hero-stat"><div class="hero-stat-num">52</div><div class="hero-stat-label">体重 kg</div></div>
+                <div class="hero-stat"><div class="hero-stat-num">36</div><div class="hero-stat-label">鞋码</div></div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="section-inner">
+            <div class="section-label fade-in">About</div>
+            <h2 class="section-title fade-in">个人简介</h2>
+            <div class="section-divider"></div>
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <p>许艾，古筝演奏者。4岁开始习筝，先后师从上海音乐学院浙江筝派<strong>孙文妍教授</strong>与<strong>陈慧老师</strong>，毕业于音乐学专业，多次在各类赛事中获奖。</p>
+                    <p>现为<strong>上海市中外艺术交流协会青年音乐家会员</strong>、<strong>宝龙美术馆官方合作艺术家</strong>及<strong>翠筝团团长</strong>。演奏风格兼具传统底蕴与现代表现力，活跃于文化场馆、品牌商业、高端沙龙、社区公益及主题特色等多元舞台。</p>
+                    <div class="about-tags">
+                        <span class="about-tag">浙江筝派</span>
+                        <span class="about-tag">青年音乐家</span>
+                        <span class="about-tag">宝龙美术馆合作</span>
+                        <span class="about-tag">翠筝团团长</span>
+                    </div>
+                </div>
+                <div class="about-info fade-in">
+                    <div class="about-info-item"><div class="about-info-label">姓名</div><div class="about-info-value">许艾</div></div>
+                    <div class="about-info-item"><div class="about-info-label">专业</div><div class="about-info-value">音乐学</div></div>
+                    <div class="about-info-item"><div class="about-info-label">身高</div><div class="about-info-value">165 cm</div></div>
+                    <div class="about-info-item"><div class="about-info-label">体重</div><div class="about-info-value">52 kg</div></div>
+                    <div class="about-info-item"><div class="about-info-label">鞋码</div><div class="about-info-value">36</div></div>
+                    <div class="about-info-item"><div class="about-info-label">习筝</div><div class="about-info-value">4岁起</div></div>
+                </div>
+            </div>
+            <div class="gallery-personal fade-in">
+                <div class="section-label" style="margin-bottom:0.3rem;">Gallery</div>
+                <h3 style="font-size:1.2rem;font-weight:600;color:#1a1512;margin-bottom:1rem;">个人风采</h3>
+                <div class="gallery-personal-grid" id="personalGallery"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories" id="categories">
+        <div class="section-inner">
+            <div class="section-label fade-in">Categories</div>
+            <h2 class="section-title fade-in">演出形式</h2>
+            <div class="section-divider"></div>
+            <div class="cat-grid">
+                <a href="#gallery-年会" class="cat-card fade-in"><i class="fas fa-building"></i><h3>年会商会</h3><p>企业年会、商会庆典</p></a>
+                <a href="#gallery-文旅" class="cat-card fade-in"><i class="fas fa-users"></i><h3>文旅社区</h3><p>文旅活动、社区主题</p></a>
+                <a href="#gallery-沙龙" class="cat-card fade-in"><i class="fas fa-glass-cheers"></i><h3>沙龙活动</h3><p>高端沙龙、晚宴演奏</p></a>
+                <a href="#gallery-品牌" class="cat-card fade-in"><i class="fas fa-bullhorn"></i><h3>品牌活动</h3><p>发布会、VIP尊享会</p></a>
+                <a href="#gallery-独奏" class="cat-card fade-in"><i class="fas fa-microphone-alt"></i><h3>独奏舞台</h3><p>个人古筝独奏专场</p></a>
+                <a href="#gallery-中西" class="cat-card fade-in"><i class="fas fa-handshake"></i><h3>中西结合</h3><p>古筝跨界合作</p></a>
+                <a href="#gallery-民乐" class="cat-card fade-in"><i class="fas fa-music"></i><h3>民乐重奏</h3><p>筝琵琶二重奏、乐团</p></a>
+                <a href="#costume" class="cat-card fade-in"><i class="fas fa-tshirt"></i><h3>国风汉服</h3><p>唐制·宋制·明制·旗袍</p></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="media-section" id="gallery">
+        <div class="section-inner">
+            <div class="section-label fade-in">Portfolio</div>
+            <h2 class="section-title fade-in">演出集锦</h2>
+            <div class="section-desc fade-in">点击图片可放大查看 · 视频支持在线播放</div>
+            <div class="section-divider"></div>
+            <div id="mediaContainer"></div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-inner">
+            <div class="section-label fade-in">Credits</div>
+            <h2 class="section-title fade-in">演出经历</h2>
+            <div class="section-desc fade-in">活跃于各大文化场馆、品牌商业舞台、高端沙龙及公益社区活动</div>
+            <div class="section-divider"></div>
+            <div class="exp-grid">
+                <div class="exp-card fade-in">
+                    <div class="exp-card-icon"><i class="fas fa-landmark"></i></div>
+                    <h3>文化场馆舞台</h3>
+                    <ul>
+                        <li>捷豹上海音乐厅</li>
+                        <li>前滩31演艺中心</li>
+                        <li>东方艺术中心</li>
+                        <li>宝龙美术馆</li>
+                        <li>上海展览中心</li>
+                        <li>闵行博物馆 · 玻璃艺术宫</li>
+                        <li>世博展览馆 · 五十弦艺术中心</li>
+                    </ul>
+                </div>
+                <div class="exp-card fade-in">
+                    <div class="exp-card-icon"><i class="fas fa-star"></i></div>
+                    <h3>品牌商业舞台</h3>
+                    <ul>
+                        <li>法国娇兰 VIP 尊享会</li>
+                        <li>华为时尚品鉴会</li>
+                        <li>瑞幸咖啡年度秀</li>
+                        <li>WEI 蔚蓝之美 · 别克汽车</li>
+                        <li style="margin-top:0.5rem;color:#7a6d5e;font-size:0.78rem;">民乐四重奏 / 弦乐团与民乐重奏跨界</li>
+                    </ul>
+                </div>
+                <div class="exp-card fade-in">
+                    <div class="exp-card-icon"><i class="fas fa-hotel"></i></div>
+                    <h3>高端沙龙舞台</h3>
+                    <ul>
+                        <li>上海半岛酒店</li>
+                        <li>上海浦东香格里拉酒店</li>
+                        <li>上海锦江汤臣洲际大酒店</li>
+                        <li>上海龙之梦酒店</li>
+                        <li>兴业私人银行</li>
+                        <li style="margin-top:0.5rem;color:#7a6d5e;font-size:0.78rem;">古筝琵琶二重奏 / 古筝大提琴跨界</li>
+                    </ul>
+                </div>
+                <div class="exp-card fade-in">
+                    <div class="exp-card-icon"><i class="fas fa-heart"></i></div>
+                    <h3>社区公益舞台</h3>
+                    <ul>
+                        <li>陆家嘴街道</li>
+                        <li>东明路街道 · 高东路街道</li>
+                        <li>芒笛锵锵行公益音乐盛典</li>
+                        <li style="margin-top:0.5rem;color:#7a6d5e;font-size:0.78rem;">古筝独奏 · 乐团重奏传递文化与温暖</li>
+                    </ul>
+                </div>
+                <div class="exp-card fade-in">
+                    <div class="exp-card-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>主题特色舞台</h3>
+                    <ul>
+                        <li>上海中心「中秋佳节」</li>
+                        <li>青浦区「元宵游园会」</li>
+                        <li>高东「樱花节」古风市集</li>
+                        <li>LCM置地广场「宋制汉服」端午</li>
+                        <li>五角场万达「迎新古风」</li>
+                        <li>「豫见上海」元宇宙主题公园</li>
+                        <li>长泰广场「跨年音乐会」</li>
+                        <li>青浦区政府新年迎新会</li>
+                    </ul>
+                </div>
+                <div class="exp-card fade-in">
+                    <div class="exp-card-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>社团组织舞台</h3>
+                    <ul>
+                        <li>上海许氏宗亲 · 上海泉州商会</li>
+                        <li>长三角永春商会</li>
+                        <li>汉服社文化表演</li>
+                        <li>校长研修班「江南丝竹」主题</li>
+                        <li>宝龙美术馆「寻声计划」音乐会</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="costume" id="costume">
+        <div class="section-inner">
+            <div class="section-label fade-in">Costume</div>
+            <h2 class="section-title fade-in">服装选择</h2>
+            <div class="section-divider" style="margin-left:auto;margin-right:auto;"></div>
+            <p class="section-desc fade-in" style="margin:0 auto;">根据演出主题与风格，提供多种国风服饰选择</p>
+            <div class="costume-items fade-in">
+                <span class="costume-item">唐制</span>
+                <span class="costume-item">宋制</span>
+                <span class="costume-item">明制</span>
+                <span class="costume-item">仙女服</span>
+                <span class="costume-item">长旗袍</span>
+                <span class="costume-item">短旗袍</span>
+            </div>
+            <div class="costume-img-wrap fade-in" id="costumeImgWrap"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>许艾 · 古筝演奏 &nbsp;|&nbsp; 以筝会友，期待合作</p>
+        <p style="margin-top:0.5rem;font-size:0.72rem;"><i class="far fa-copyright"></i> 2025 &nbsp;·&nbsp; All Rights Reserved</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <script>
+        const PERSONAL_IMAGES = [
+            "个人风采/微信图片_20260601212815435_2.jpg",
+            "个人风采/微信图片_20260601212815435_3.jpg",
+            "个人风采/微信图片_20260601212815435_4.jpg",
+            "个人风采/微信图片_20260601212815435_5.jpg",
+            "个人风采/微信图片_20260601212815435_6.jpg",
+        ];
+        const CATEGORIES = [
+            { id:"年会", label:"年会商会演出", icon:"fa-building",
+              images:["年会商会演出/微信图片_20260601212815435_8.jpg","年会商会演出/微信图片_20260601212815435_9.jpg","年会商会演出/微信图片_20260601212815435_10.jpg","年会商会演出/微信图片_20260601212815435_11.jpg"], videos:[] },
+            { id:"文旅", label:"文旅社区主题活动", icon:"fa-users",
+              images:["文旅社区主题活动/微信图片_20260601212815435_13.jpg","文旅社区主题活动/微信图片_20260601212815435_14.jpg","文旅社区主题活动/微信图片_20260601212815435_15.jpg","文旅社区主题活动/微信图片_20260601212815435_16.jpg","文旅社区主题活动/微信图片_20260601212815435_17.jpg"], videos:[] },
+            { id:"沙龙", label:"沙龙活动", icon:"fa-glass-cheers",
+              images:["沙龙活动/微信图片_20260601212815435_19.jpg","沙龙活动/微信图片_20260601212815435_20.jpg"], videos:[] },
+            { id:"品牌", label:"品牌活动", icon:"fa-bullhorn",
+              images:["品牌活动/微信图片_20260601212815435_22.jpg","品牌活动/微信图片_20260601212815435_23.jpg","品牌活动/微信图片_20260601212815435_24.jpg","品牌活动/微信图片_20260601212815435_25.jpg","品牌活动/微信图片_20260601212815435_26.jpg","品牌活动/微信图片_20260601212815435_27.jpg"], videos:[] },
+            { id:"独奏", label:"独奏舞台", icon:"fa-microphone-alt",
+              images:[], videos:["独奏舞台/微信视频_20260601212815435_29.mp4","独奏舞台/微信视频_20260601212815435_30.mp4","独奏舞台/微信视频_20260601212815435_31.mp4"] },
+            { id:"中西", label:"中西结合", icon:"fa-handshake",
+              images:[], videos:["中西结合/微信视频_20260601212815435_33.mp4"] },
+            { id:"民乐", label:"民乐重奏", icon:"fa-music",
+              images:[], videos:["民乐重奏/微信视频_20260601212815435_35.mp4","民乐重奏/微信视频_20260601212815435_36.mp4"] },
+        ];
+        const COSTUME_IMAGE = "服装选择/微信图片_20260601212815435_38.jpg";
+
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        document.getElementById('lightboxClose').onclick = () => lb.classList.remove('open');
+        lb.onclick = (e) => { if (e.target === lb) lb.classList.remove('open'); };
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.classList.remove('open'); });
+        function openLightbox(src) { lbImg.src = src; lb.classList.add('open'); }
+
+        const pg = document.getElementById('personalGallery');
+        PERSONAL_IMAGES.forEach(src => {
+            const d = document.createElement('div'); d.className = 'gallery-item fade-in';
+            const i = document.createElement('img'); i.src = src; i.alt = '个人风采'; i.loading = 'lazy';
+            i.addEventListener('click', () => openLightbox(src));
+            d.appendChild(i); pg.appendChild(d);
+        });
+
+        const mc = document.getElementById('mediaContainer');
+        CATEGORIES.forEach(cat => {
+            const hasImgs = cat.images.length > 0, hasVids = cat.videos.length > 0;
+            if (!hasImgs && !hasVids) return;
+            const sec = document.createElement('div'); sec.className = 'media-category fade-in'; sec.id = 'gallery-' + cat.id;
+            const hdr = document.createElement('div'); hdr.className = 'media-category-header';
+            hdr.innerHTML = `<i class="fas ${cat.icon}"></i><h3>${cat.label}</h3><span class="count">${cat.images.length+cat.videos.length} 项</span>`;
+            sec.appendChild(hdr);
+            if (hasImgs) {
+                const g = document.createElement('div'); g.className = 'media-grid images';
+                cat.images.forEach(src => {
+                    const it = document.createElement('div'); it.className = 'media-item image-item';
+                    const i = document.createElement('img'); i.src = src; i.alt = cat.label; i.loading = 'lazy';
+                    i.addEventListener('click', () => openLightbox(src));
+                    it.appendChild(i); g.appendChild(it);
+                });
+                sec.appendChild(g);
+            }
+            if (hasVids) {
+                const g = document.createElement('div'); g.className = 'media-grid videos';
+                if (hasImgs) g.style.marginTop = '0.8rem';
+                cat.videos.forEach(src => {
+                    const it = document.createElement('div'); it.className = 'media-item video-item';
+                    const badge = document.createElement('span'); badge.className = 'video-badge'; badge.textContent = '\u25B6 \u89C6\u9891';
+                    it.appendChild(badge);
+                    const v = document.createElement('video'); v.src = src; v.controls = true; v.preload = 'metadata'; v.playsInline = true;
+                    it.appendChild(v); g.appendChild(it);
+                });
+                sec.appendChild(g);
+            }
+            mc.appendChild(sec);
+        });
+
+        const cw = document.getElementById('costumeImgWrap');
+        const ci = document.createElement('img'); ci.src = COSTUME_IMAGE; ci.alt = '服装选择'; ci.style.cursor = 'pointer';
+        ci.addEventListener('click', () => openLightbox(COSTUME_IMAGE));
+        cw.appendChild(ci);
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 30));
+        const toggle = document.getElementById('navToggle');
+        const links = document.getElementById('navLinks');
+        toggle.addEventListener('click', () => links.classList.toggle('open'));
+        links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
